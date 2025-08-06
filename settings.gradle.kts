@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Baubaptest"
 include(":app")
-include(":core")
+include(":core:database")
+include(":core:model")

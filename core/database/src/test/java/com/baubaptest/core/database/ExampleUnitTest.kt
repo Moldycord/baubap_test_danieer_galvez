@@ -1,4 +1,4 @@
-package com.baubaptest.core
+package com.baubaptest.core.database
 
 import org.junit.Test
 

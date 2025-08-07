@@ -7,8 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.baubaptest.core.model.UiState
-import com.baubaptest.features.onboarding.presentation.views.splash.SplashViewModel
-import com.baubaptest.features.onboarding.presentation.views.Loader
+import com.baubaptest.features.onboarding.presentation.views.general.Loader
 import kotlinx.coroutines.delay
 
 @Composable

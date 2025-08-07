@@ -8,4 +8,6 @@ sealed class ScreenGraph(val route: String) {
     data object Login : ScreenGraph("login")
 
     data object Register : ScreenGraph("register")
+
+    data object Home : ScreenGraph("home")
 }

@@ -1,7 +1,7 @@
 package com.baubaptest.features.onboarding.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import com.baubaptest.core.model.Result
+import com.baubaptest.core.model.CustomResult
 import com.baubaptest.core.model.User
 
 interface LoginRepository {
@@ -9,7 +9,7 @@ interface LoginRepository {
     /**
      * Login to the app returns a Flow with the states
      * **/
-     fun login(email: String, password: String): Flow<Result<Unit>>
+     fun login(email: String, password: String): Flow<CustomResult<Unit>>
 
     /**
      * Close the session and clear the data
@@ -19,5 +19,5 @@ interface LoginRepository {
     /***
      * Observes the state of the authentified user
      * */
-    fun observeUser() : Flow<Result<User>>
+    fun observeUser() : Flow<CustomResult<User>>
 }

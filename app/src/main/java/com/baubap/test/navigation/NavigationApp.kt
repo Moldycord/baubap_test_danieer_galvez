@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.baubaptest.features.onboarding.presentation.model.ScreenGraph
+import com.baubaptest.features.onboarding.presentation.views.home.HomeScreen
 import com.baubaptest.features.onboarding.presentation.views.onboarding.OnboardingScreen
 import com.baubaptest.features.onboarding.presentation.views.login.LoginScreen
 import com.baubaptest.features.onboarding.presentation.views.register.RegisterScreen
@@ -21,5 +22,6 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         composable(ScreenGraph.Onboarding.route) { OnboardingScreen(navController) }
         composable(ScreenGraph.Login.route) { LoginScreen(navController) }
         composable(ScreenGraph.Register.route) { RegisterScreen(navController) }
+        composable(ScreenGraph.Home.route) { HomeScreen(navController) }
     }
 }

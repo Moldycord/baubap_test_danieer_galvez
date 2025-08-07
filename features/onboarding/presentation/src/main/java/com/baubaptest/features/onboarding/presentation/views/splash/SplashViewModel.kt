@@ -2,7 +2,7 @@ package com.baubaptest.features.onboarding.presentation.views.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.baubaptest.core.model.Result
+import com.baubaptest.core.model.CustomResult
 import com.baubaptest.core.model.UiState
 import com.baubaptest.features.onboarding.domain.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +27,9 @@ class SplashViewModel @Inject constructor(
             loginRepository.observeUser()
                 .map { result ->
                     when (result) {
-                        is Result.Success -> UiState.Success(true)
-                        is Result.Error -> UiState.Success(false)
-                        is Result.Loading -> UiState.Loading
+                        is CustomResult.Success -> UiState.Success(true)
+                        is CustomResult.Error -> UiState.Success(false)
+                        is CustomResult.Loading -> UiState.Loading
                     }
                 }
                 .catch {  _authState.value = UiState.Success(false) }

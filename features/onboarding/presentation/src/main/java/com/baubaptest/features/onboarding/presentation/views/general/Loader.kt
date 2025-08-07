@@ -1,4 +1,4 @@
-package com.baubaptest.features.onboarding.presentation.views
+package com.baubaptest.features.onboarding.presentation.views.general
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,6 +1,8 @@
 package com.baubaptest.features.onboarding.data
 
+import com.baubaptest.features.onboarding.data.repository.AccountRepositoryImpl
 import com.baubaptest.features.onboarding.data.repository.LoginRepositoryImpl
+import com.baubaptest.features.onboarding.domain.repository.AccountRepository
 import com.baubaptest.features.onboarding.domain.repository.LoginRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class DataModule {
     abstract fun bindLoginRepository(
         impl: LoginRepositoryImpl
     ): LoginRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsAccountRepository(
+        impl: AccountRepositoryImpl
+    ): AccountRepository
 }

@@ -29,7 +29,8 @@ class LoginRepositoryImpl @Inject constructor(
                 val updatedUser = it.copy(isLoggedIn = true)
                 userDao.updateUser(updatedUser)
                 emit(Result.Success(Unit))
-            } ?: emit(Result.Error(message = "User not found"))
+            } ?:
+            emit(Result.Error(message = "Usuario no encontrado, revisa tus credenciales"))
         } catch (error: Exception) {
             emit(Result.Error(message = "Error while retrieving data", error))
         }

@@ -29,4 +29,8 @@ class LoginViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    fun resetLoginState() {
+        _loginState.value = UiState.Empty
+    }
+
 }

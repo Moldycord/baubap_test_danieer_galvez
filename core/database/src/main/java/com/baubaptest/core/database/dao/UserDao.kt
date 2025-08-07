@@ -14,9 +14,14 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: UserEntity): Long
 
-    @Query("SELECT * FROM users WHERE email = :email AND token = :password LIMIT 1")
+    @Query("""
+    SELECT * FROM users 
+    WHERE (phone = :identifier OR curp = :identifier) 
+    AND token = :password 
+    LIMIT 1
+    """)
     fun getUserByCredentials(
-        email: String,
+        identifier: String,
         password: String
     ): UserEntity?
 

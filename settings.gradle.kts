@@ -23,3 +23,6 @@ rootProject.name = "Baubaptest"
 include(":app")
 include(":core:database")
 include(":core:model")
+include(":features:onboarding:data")
+include(":features:onboarding:domain")
+include(":features:onboarding:presentation")

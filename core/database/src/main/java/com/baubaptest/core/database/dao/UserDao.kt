@@ -12,26 +12,16 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: UserEntity): Long
+    suspend fun insertUser(user: UserEntity)
 
     @Query("SELECT * FROM users WHERE email = :email AND token = :password LIMIT 1")
-    fun getUserByCredentials(
-        email: String,
-        password: String
-    ): UserEntity?
-
-    @Query("SELECT COUNT(*) > 0 FROM users WHERE email = :email")
-    fun existsByEmail(email: String): Boolean
-
-    @Query("SELECT COUNT(*) > 0 FROM users WHERE curp = :curp")
-    fun existsByCurp(curp: String): Boolean
-
+    suspend fun getUserByCredentials(email: String, password: String): UserEntity?
 
     @Update
-    fun updateUser(user: UserEntity): Int
+    suspend fun updateUser(user: UserEntity)
 
     @Query("UPDATE users SET isLoggedIn = 0")
-    fun logoutAll(): Int
+    suspend fun logoutAll()
 
     @Query("SELECT * FROM users WHERE isLoggedIn = 1 LIMIT 1")
     fun observeLoggedInUser(): Flow<UserEntity?>

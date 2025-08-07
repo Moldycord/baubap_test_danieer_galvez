@@ -24,19 +24,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
 
     implementation(project(":core:model"))
-    implementation("javax.inject:javax.inject:1")
 
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.junit)
+
+
 }

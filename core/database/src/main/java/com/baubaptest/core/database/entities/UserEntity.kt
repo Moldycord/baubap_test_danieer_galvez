@@ -10,7 +10,5 @@ data class UserEntity(
     var name: String = "",
     var email: String = "",
     var token: String = "",
-    var curp: String = "",
-    var phone: String = "",
     var isLoggedIn: Boolean = false
 )

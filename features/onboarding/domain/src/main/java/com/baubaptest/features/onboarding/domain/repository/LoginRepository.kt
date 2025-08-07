@@ -1,8 +1,8 @@
 package com.baubaptest.features.onboarding.domain.repository
 
+import com.baubaptest.core.model.User
 import kotlinx.coroutines.flow.Flow
 import com.baubaptest.core.model.Result
-import com.baubaptest.core.model.User
 
 interface LoginRepository {
 

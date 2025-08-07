@@ -19,8 +19,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,123 +51,149 @@ fun RegisterScreen(
     var showDialog by remember { mutableStateOf(false) }
     var nip by remember { mutableStateOf("") }
 
+    val registerStatus by viewModel.registerStatus.collectAsState()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(registerStatus) {
+        if (registerStatus is RegisterStatus.Error) {
+            val message = (registerStatus as RegisterStatus.Error).message
+            snackbarHostState.showSnackbar(message)
+            viewModel.resetStatus()
+        }
+    }
 
     val isRegisterEnabled = uiState.phone.length == 10 && uiState.curp.isNotBlank()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-    ) {
-        IconButton(onClick = { navController.popBackStack() }) {
-            Icon(
-                Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Atrás"
-            )
-        }
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { paddingValues ->
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Crea tu cuenta",
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-
-        OutlinedTextField(
-            value = uiState.fullName,
-            onValueChange = { viewModel.onFullNameChanged(it) },
-            label = { Text("Nombre completo") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = uiState.phone,
-            onValueChange = { viewModel.onPhoneChanged(it) },
-            label = { Text("Número de celular (10 dígitos)") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = uiState.curp,
-            onValueChange = { viewModel.onCurpChanged(it) },
-            label = { Text("CURP") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = uiState.email,
-            onValueChange = { viewModel.onEmailChanged(it) },
-            label = { Text("Correo electrónico") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "¿No recuerdas tu CURP? Consúltala aquí",
-            color = PrimaryPurple,
+        Column(
             modifier = Modifier
-                .clickable { /* navegar a ayuda CURP */ }
-                .padding(vertical = 8.dp)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = { showDialog = true },
-            enabled = isRegisterEnabled,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(50),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if (isRegisterEnabled) PrimaryPurple else Color.LightGray
-            )
+                .padding(paddingValues)
+                .padding(4.dp)
         ) {
-            Text("Crea tu cuenta")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-            Text("¿Ya tienes cuenta? ")
-            Text(
-                text = "Inicia sesión",
-                color = PrimaryPurple,
-                modifier = Modifier.clickable {
-                    navController.navigate("login")
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+            ) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Atrás"
+                    )
                 }
-            )
-        }
 
-        if (showDialog) {
-            InputDialog(
-                title = "Establece tu NIP",
-                description = "Ingresa un NIP de 6 dígitos que usarás para iniciar sesión.",
-                inputLabel = "NIP de seguridad",
-                inputValue = nip,
-                onValueChange = { nip = it },
-                onDismiss = { showDialog = false },
-                onConfirm = {
-                    showDialog = false
-                    viewModel.onRegister(nip) {
-                        navController.navigate("home") {
-                            popUpTo("register") { inclusive = true }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Crea tu cuenta",
+                    style = MaterialTheme.typography.headlineSmall
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+
+                OutlinedTextField(
+                    value = uiState.fullName,
+                    onValueChange = { viewModel.onFullNameChanged(it) },
+                    label = { Text("Nombre completo") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
+                    value = uiState.phone,
+                    onValueChange = { viewModel.onPhoneChanged(it) },
+                    label = { Text("Número de celular (10 dígitos)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
+                    value = uiState.curp,
+                    onValueChange = { viewModel.onCurpChanged(it) },
+                    label = { Text("CURP") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedTextField(
+                    value = uiState.email,
+                    onValueChange = { viewModel.onEmailChanged(it) },
+                    label = { Text("Correo electrónico") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "¿No recuerdas tu CURP? Consúltala aquí",
+                    color = PrimaryPurple,
+                    modifier = Modifier
+                        .clickable { /* navegar a ayuda CURP */ }
+                        .padding(vertical = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = { showDialog = true },
+                    enabled = isRegisterEnabled,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(50),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isRegisterEnabled) PrimaryPurple else Color.LightGray
+                    )
+                ) {
+                    Text("Crea tu cuenta")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("¿Ya tienes cuenta? ")
+                    Text(
+                        text = "Inicia sesión",
+                        color = PrimaryPurple,
+                        modifier = Modifier.clickable {
+                            navController.navigate("login")
                         }
-                    }
-                },
-                inputKeyboard = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
-            )
+                    )
+                }
+
+                if (showDialog) {
+                    InputDialog(
+                        title = "Establece tu NIP",
+                        description = "Ingresa un NIP de 6 dígitos que usarás para iniciar sesión.",
+                        inputLabel = "NIP de seguridad",
+                        inputValue = nip,
+                        onValueChange = { nip = it },
+                        onDismiss = { showDialog = false },
+                        onConfirm = {
+                            showDialog = false
+                            viewModel.onRegister(nip) {
+                                navController.navigate("login") {
+                                    popUpTo("register") { inclusive = true }
+                                }
+                            }
+                        },
+                        inputKeyboard = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
+                    )
+                }
+            }
         }
     }
+
 }

@@ -18,8 +18,8 @@ class AccountRepositoryImpl @Inject constructor(
         nip: String,
         curp: String,
         phone: String
-    ): Result<Unit> {
-        return try {
+    ): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
             val account = UserEntity(
                 name = name,
                 email = email,

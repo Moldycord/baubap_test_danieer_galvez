@@ -37,7 +37,6 @@ android {
 dependencies {
 
     implementation(project(":core:model"))
-    implementation("javax.inject:javax.inject:1")
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

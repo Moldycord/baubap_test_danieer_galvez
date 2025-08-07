@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    android.buildFeatures.buildConfig = true
     namespace = "com.baubap.test"
     compileSdk = 36
 

@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -31,15 +30,18 @@ android {
     }
 }
 
-hilt{
+hilt {
     enableAggregatingTask = false
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+
+    implementation(libs.androidx.junit)
     testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     //hilt
     implementation(libs.hilt.android)
@@ -51,4 +53,5 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(project(":core:model"))
+    testImplementation(kotlin("test"))
 }
